@@ -1,0 +1,200 @@
+C:\Windows\system32>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database shopping charset=utf8;
+Query OK, 1 row affected, 1 warning (0.24 sec)
+
+mysql> use shopping;
+Database changed
+mysql> create table shopping(id int primary key auto_increment not null,like varchar(3) not null,remind varchar(3) not null,wish varchar(27),name varchar(20) not null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like varchar(3) not null,remind varchar(3) not null,wish varchar(27),name varcha' at line 1
+mysql> create table shopping(id int primary key auto_increment not null,favour varchar(3) not null,remind varchar(3) not null,wish varchar(27),name varchar(20) not null);
+Query OK, 0 rows affected (0.67 sec)
+
+mysql> select * from shopping;
+Empty set (0.00 sec)
+
+mysql> desc shopping;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| favour | varchar(3)  | NO   |     | NULL    |                |
+| remind | varchar(3)  | NO   |     | NULL    |                |
+| wish   | varchar(27) | YES  |     | NULL    |                |
+| name   | varchar(20) | NO   |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+5 rows in set (0.11 sec)
+
+mysql> insert into shopping(favour,remind,wish,name) values('1','2','123','zhaoyichen');
+Query OK, 1 row affected (0.24 sec)
+
+mysql> select * from shopping;
++----+--------+--------+------+------------+
+| id | favour | remind | wish | name       |
++----+--------+--------+------+------------+
+|  1 | 1      | 2      | 123  | zhaoyichen |
++----+--------+--------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> alter table shopping add name varchar('zhangxuejing');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''zhangxuejing')' at line 1
+mysql> alter table shopping add name varchar('20');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''20')' at line 1
+mysql> alter table shopping add name varchar("20");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"20")' at line 1
+mysql> alter table shopping add name varchar('zhangxuejing'),('zhangxuejing100');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''zhangxuejing'),('zhangxuejing100')' at line 1
+mysql> insert into shopping (name) values('zhangxuejing');
+ERROR 1364 (HY000): Field 'favour' doesn't have a default value
+mysql> insert into shopping(favour,remind,wish,name) values('1','2','123','zhangxuejing');
+Query OK, 1 row affected (0.27 sec)
+
+mysql> select * from shopping;
++----+--------+--------+------+--------------+
+| id | favour | remind | wish | name         |
++----+--------+--------+------+--------------+
+|  1 | 1      | 2      | 123  | zhaoyichen   |
+|  2 | 1      | 2      | 123  | zhangxuejing |
++----+--------+--------+------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into shopping(favour,remind,wish,name) values('1','2','123','zhaoyichen1'),('1','2','123','zhangxuejing1');
+Query OK, 2 rows affected (0.25 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * form shopping;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'form shopping' at line 1
+mysql> select * from shopping;
++----+--------+--------+------+---------------+
+| id | favour | remind | wish | name          |
++----+--------+--------+------+---------------+
+|  1 | 1      | 2      | 123  | zhaoyichen    |
+|  2 | 1      | 2      | 123  | zhangxuejing  |
+|  3 | 1      | 2      | 123  | zhaoyichen1   |
+|  4 | 1      | 2      | 123  | zhangxuejing1 |
++----+--------+--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table shopping add money varchar('3');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''3')' at line 1
+mysql> alter table shopping add money varchar(3);
+Query OK, 0 rows affected (0.64 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from shopping;
++----+--------+--------+------+---------------+-------+
+| id | favour | remind | wish | name          | money |
++----+--------+--------+------+---------------+-------+
+|  1 | 1      | 2      | 123  | zhaoyichen    | NULL  |
+|  2 | 1      | 2      | 123  | zhangxuejing  | NULL  |
+|  3 | 1      | 2      | 123  | zhaoyichen1   | NULL  |
+|  4 | 1      | 2      | 123  | zhangxuejing1 | NULL  |
++----+--------+--------+------+---------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update shopping set money=100,money=200,money=300,money=400 where id=1,id=2,id=3,id=4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',id=2,id=3,id=4' at line 1
+mysql> update shopping set money=100  where id=1;
+Query OK, 1 row affected (0.23 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update shopping set money=200  where id=2;
+Query OK, 1 row affected (0.28 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update shopping set money=400  where id=3;
+Query OK, 1 row affected (0.27 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update shopping set money=300  where id=4;
+Query OK, 1 row affected (0.28 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update shopping set wish=567  where id=1;
+Query OK, 1 row affected (0.25 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shopping;
++----+--------+--------+------+---------------+-------+
+| id | favour | remind | wish | name          | money |
++----+--------+--------+------+---------------+-------+
+|  1 | 1      | 2      | 567  | zhaoyichen    | 100   |
+|  2 | 1      | 2      | 123  | zhangxuejing  | 200   |
+|  3 | 1      | 2      | 123  | zhaoyichen1   | 400   |
+|  4 | 1      | 2      | 123  | zhangxuejing1 | 300   |
++----+--------+--------+------+---------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table shopping(id int primary key auto_increment not null,favour varchar(3) not null,remind varchar(3) not null,wish varchar(27),name varchar(20) not null,idDelete varchar(1));
+ERROR 1050 (42S01): Table 'shopping' already exists
+mysql> create table shopping1(id int primary key auto_increment not null,favour varchar(3) not null,remind varchar(3) not null,wish varchar(27),name varchar(20) not null,idDelete varchar(1));
+Query OK, 0 rows affected (1.04 sec)
+
+mysql> desc shopping;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| favour | varchar(3)  | NO   |     | NULL    |                |
+| remind | varchar(3)  | NO   |     | NULL    |                |
+| wish   | varchar(27) | YES  |     | NULL    |                |
+| name   | varchar(20) | NO   |     | NULL    |                |
+| money  | varchar(3)  | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> desc shopping1;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| favour   | varchar(3)  | NO   |     | NULL    |                |
+| remind   | varchar(3)  | NO   |     | NULL    |                |
+| wish     | varchar(27) | YES  |     | NULL    |                |
+| name     | varchar(20) | NO   |     | NULL    |                |
+| idDelete | varchar(1)  | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+6 rows in set (0.11 sec)
+
+mysql> insert into shopping1(name,idDelete) values('zhangxuejing2',0);
+ERROR 1364 (HY000): Field 'favour' doesn't have a default value
+mysql> insert into shopping2(name,idDelete) values('zhangxuejing2',0);
+ERROR 1146 (42S02): Table 'shopping.shopping2' doesn't exist
+mysql> create table shopping1(id int primary key auto_increment not null,wish varchar(27),name varchar(20) not null,idDelete varchar(1));
+ERROR 1050 (42S01): Table 'shopping1' already exists
+mysql> create table shopping5(id int primary key auto_increment not null,wish varchar(27),name varchar(20) not null,idDelete varchar(1));
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> desc shopping5;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| wish     | varchar(27) | YES  |     | NULL    |                |
+| name     | varchar(20) | NO   |     | NULL    |                |
+| idDelete | varchar(1)  | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into shopping5(name,idDelete) values('zhangxuejing2',0);
+Query OK, 1 row affected (0.23 sec)
+
+mysql> select * from shopping5;
++----+------+---------------+----------+
+| id | wish | name          | idDelete |
++----+------+---------------+----------+
+|  1 | NULL | zhangxuejing2 | 0        |
++----+------+---------------+----------+
+1 row in set (0.00 sec)
