@@ -1,0 +1,372 @@
+Microsoft Windows [版本 10.0.16299.15]
+(c) 2017 Microsoft Corporation。保留所有权利。
+
+C:\Windows\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\Windows\system32>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 25
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use shopping;
+Database changed
+mysql> clect * form emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'clect * form emp' at line 1
+mysql> select * from emp;
++-------+--------+-----------+------+------------+------+---------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM    | DEPTNO | ok   |
++-------+--------+-----------+------+------------+------+---------+--------+------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980/12/17 |  800 |         | 20     | 1    |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981/2/20  | 1600 | 300.00  | 30     | 1    |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981/2/22  | 1250 | 500.00  | 30     | 1    |
+|  7566 | JONES  | MANAGER   | 7839 | 1981/4/2   | 2975 |         | 20     | 1    |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981/9/28  | 1250 | 1400.00 | 30     | 1    |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981/5/1   | 2850 |         | 30     | 1    |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981/6/9   | 2450 |         | 10     | 1    |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987/4/19  | 3000 |         | 20     | 1    |
+|  7839 | KING   | PRESIDENT |      | 1981/11/17 | 5000 |         | 10     | 1    |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981/9/8   | 1500 | 0.00    | 30     | 1    |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987/5/23  | 1100 |         | 20     | 1    |
+|  7900 | JAMES  | CLERK     | 7698 | 1981/12/3  |  950 |         | 30     | 1    |
+|  7902 | FORD   | ANALYST   | 7566 | 1981/12/3  | 3000 |         | 20     | 1    |
+|  7934 | MILLER | CLERK     | 7782 | 1982/1/23  | 1300 |         | 10     | 1    |
++-------+--------+-----------+------+------------+------+---------+--------+------+
+14 rows in set (0.00 sec)
+
+mysql> select * from jobs;
++------------+---------------------------------+------------+------------+
+| JOB_ID     | JOB_TITLE                       | MIN_SALARY | MAX_SALARY |
++------------+---------------------------------+------------+------------+
+| AD_PRES    | President                       | 20080      | 40000      |
+| AD_VP      | Administration Vice President   | 15000      | 30000      |
+| AD_ASST    | Administration Assistant        | 3000       | 6000       |
+| FI_MGR     | Finance Manager                 | 8200       | 16000      |
+| FI_ACCOUNT | Accountant                      | 4200       | 9000       |
+| AC_MGR     | Accounting Manager              | 8200       | 16000      |
+| AC_ACCOUNT | Public Accountant               | 4200       | 9000       |
+| SA_MAN     | Sales Manager                   | 10000      | 20080      |
+| SA_REP     | Sales Representative            | 6000       | 12008      |
+| PU_MAN     | Purchasing Manager              | 8000       | 15000      |
+| PU_CLERK   | Purchasing Clerk                | 2500       | 5500       |
+| ST_MAN     | Stock Manager                   | 5500       | 8500       |
+| ST_CLERK   | Stock Clerk                     | 2008       | 5000       |
+| SH_CLERK   | Shipping Clerk                  | 2500       | 5500       |
+| IT_PROG    | Programmer                      | 4000       | 10000      |
+| MK_MAN     | Marketing Manager               | 9000       | 15000      |
+| MK_REP     | Marketing Representative        | 4000       | 9000       |
+| HR_REP     | Human Resources Representative  | 4000       | 9000       |
+| PR_REP     | Public Relations Representative | 4500       | 10500      |
++------------+---------------------------------+------------+------------+
+19 rows in set (0.00 sec)
+
+mysql> select distinct MAX_SALARY from jobs;
++------------+
+| MAX_SALARY |
++------------+
+| 40000      |
+| 30000      |
+| 6000       |
+| 16000      |
+| 9000       |
+| 20080      |
+| 12008      |
+| 15000      |
+| 5500       |
+| 8500       |
+| 5000       |
+| 10000      |
+| 10500      |
++------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from emp where deptno=10;
++-------+--------+-----------+------+------------+------+------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO | ok   |
++-------+--------+-----------+------+------------+------+------+--------+------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981/6/9   | 2450 |      | 10     | 1    |
+|  7839 | KING   | PRESIDENT |      | 1981/11/17 | 5000 |      | 10     | 1    |
+|  7934 | MILLER | CLERK     | 7782 | 1982/1/23  | 1300 |      | 10     | 1    |
++-------+--------+-----------+------+------------+------+------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select sum(sal) from emp;
++----------+
+| sum(sal) |
++----------+
+|    29025 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select max(sal) from emp where sal>2450;
++----------+
+| max(sal) |
++----------+
+|     5000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select  MAX_SALARY,sum( MAX_SALARY) from jobs group by  MAX_SALARY;
++------------+------------------+
+| MAX_SALARY | sum( MAX_SALARY) |
++------------+------------------+
+| 40000      |            40000 |
+| 30000      |            30000 |
+| 6000       |             6000 |
+| 16000      |            32000 |
+| 9000       |            36000 |
+| 20080      |            20080 |
+| 12008      |            12008 |
+| 15000      |            30000 |
+| 5500       |            11000 |
+| 8500       |             8500 |
+| 5000       |             5000 |
+| 10000      |            10000 |
+| 10500      |            10500 |
++------------+------------------+
+13 rows in set (0.00 sec)
+
+mysql> select  MAX_SALARY,sal,sum( MAX_SALARY),sum(sal) from jobs group by  MAX_SALARY,sal;
+ERROR 1054 (42S22): Unknown column 'sal' in 'field list'
+mysql> select  MAX_SALARY,MIN_SALARY,sum( MAX_SALARY),sum(MIN_SALARY) from jobs group by  MAX_SALARY,MIN_SALARY;
++------------+------------+------------------+-----------------+
+| MAX_SALARY | MIN_SALARY | sum( MAX_SALARY) | sum(MIN_SALARY) |
++------------+------------+------------------+-----------------+
+| 40000      | 20080      |            40000 |           20080 |
+| 30000      | 15000      |            30000 |           15000 |
+| 6000       | 3000       |             6000 |            3000 |
+| 16000      | 8200       |            32000 |           16400 |
+| 9000       | 4200       |            18000 |            8400 |
+| 20080      | 10000      |            20080 |           10000 |
+| 12008      | 6000       |            12008 |            6000 |
+| 15000      | 8000       |            15000 |            8000 |
+| 5500       | 2500       |            11000 |            5000 |
+| 8500       | 5500       |             8500 |            5500 |
+| 5000       | 2008       |             5000 |            2008 |
+| 10000      | 4000       |            10000 |            4000 |
+| 15000      | 9000       |            15000 |            9000 |
+| 9000       | 4000       |            18000 |            8000 |
+| 10500      | 4500       |            10500 |            4500 |
++------------+------------+------------------+-----------------+
+15 rows in set (0.00 sec)
+
+mysql> selet sal,count(sal) from emp group by sal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selet sal,count(sal) from emp group by sal' at line 1
+mysql> selet sal,count(sal) from emp where sal >= 1100 group by sal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selet sal,count(sal) from emp where sal >= 1100 group by sal' at line 1
+mysql> select count(*) from emp;
++----------+
+| count(*) |
++----------+
+|       14 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> selet sal,count(sal) from emp group by sal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selet sal,count(sal) from emp group by sal' at line 1
+mysql> selet mgr,count(mgr) from emp group by mgr;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selet mgr,count(mgr) from emp group by mgr' at line 1
+mysql> select mgr,count(mgr) from emp group by mgr;
++------+------------+
+| mgr  | count(mgr) |
++------+------------+
+| 7902 |          1 |
+| 7698 |          5 |
+| 7839 |          3 |
+| 7566 |          2 |
+|      |          1 |
+| 7788 |          1 |
+| 7782 |          1 |
++------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select mgr,count(mgr) from emp where mge >= 7698 group by mgr;
+ERROR 1054 (42S22): Unknown column 'mge' in 'where clause'
+mysql> select mgr,count(mgr) from emp where mgr >= 7698 group by mgr;
++------+------------+
+| mgr  | count(mgr) |
++------+------------+
+| 7902 |          1 |
+| 7698 |          5 |
+| 7839 |          3 |
+| 7788 |          1 |
+| 7782 |          1 |
++------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp where sal>1300 order by sal;
++-------+--------+-----------+------+------------+------+--------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM   | DEPTNO | ok   |
++-------+--------+-----------+------+------------+------+--------+--------+------+
+|  7844 | TURNER | SALESMAN  | 7698 | 1981/9/8   | 1500 | 0.00   | 30     | 1    |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981/2/20  | 1600 | 300.00 | 30     | 1    |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981/6/9   | 2450 |        | 10     | 1    |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981/5/1   | 2850 |        | 30     | 1    |
+|  7566 | JONES  | MANAGER   | 7839 | 1981/4/2   | 2975 |        | 20     | 1    |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987/4/19  | 3000 |        | 20     | 1    |
+|  7902 | FORD   | ANALYST   | 7566 | 1981/12/3  | 3000 |        | 20     | 1    |
+|  7839 | KING   | PRESIDENT |      | 1981/11/17 | 5000 |        | 10     | 1    |
++-------+--------+-----------+------+------------+------+--------+--------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp where sal>1300 order by sal desc;
++-------+--------+-----------+------+------------+------+--------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM   | DEPTNO | ok   |
++-------+--------+-----------+------+------------+------+--------+--------+------+
+|  7839 | KING   | PRESIDENT |      | 1981/11/17 | 5000 |        | 10     | 1    |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987/4/19  | 3000 |        | 20     | 1    |
+|  7902 | FORD   | ANALYST   | 7566 | 1981/12/3  | 3000 |        | 20     | 1    |
+|  7566 | JONES  | MANAGER   | 7839 | 1981/4/2   | 2975 |        | 20     | 1    |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981/5/1   | 2850 |        | 30     | 1    |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981/6/9   | 2450 |        | 10     | 1    |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981/2/20  | 1600 | 300.00 | 30     | 1    |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981/9/8   | 1500 | 0.00   | 30     | 1    |
++-------+--------+-----------+------+------------+------+--------+--------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp order by sal limit 0,2;
++-------+-------+-------+------+------------+------+------+--------+------+
+| EMPNO | ENAME | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO | ok   |
++-------+-------+-------+------+------------+------+------+--------+------+
+|  7369 | SMITH | CLERK | 7902 | 1980/12/17 |  800 |      | 20     | 1    |
+|  7900 | JAMES | CLERK | 7698 | 1981/12/3  |  950 |      | 30     | 1    |
++-------+-------+-------+------+------------+------+------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select mgr,sum(mgr),max(mgr),depton from emp where depton>10 group by mgr,depton with rollup;
+ERROR 1054 (42S22): Unknown column 'depton' in 'field list'
+mysql> select mgr,sum(mgr),max(mgr),deptno from emp where deptno>10 group by mgr,deptno with rollup;
++------+----------+----------+--------+
+| mgr  | sum(mgr) | max(mgr) | deptno |
++------+----------+----------+--------+
+| 7566 |    15132 | 7566     | 20     |
+| 7566 |    15132 | 7566     | NULL   |
+| 7698 |    38490 | 7698     | 30     |
+| 7698 |    38490 | 7698     | NULL   |
+| 7788 |     7788 | 7788     | 20     |
+| 7788 |     7788 | 7788     | NULL   |
+| 7839 |     7839 | 7839     | 20     |
+| 7839 |     7839 | 7839     | 30     |
+| 7839 |    15678 | 7839     | NULL   |
+| 7902 |     7902 | 7902     | 20     |
+| 7902 |     7902 | 7902     | NULL   |
+| NULL |    84990 | 7902     | NULL   |
++------+----------+----------+--------+
+12 rows in set (0.11 sec)
+
+mysql> select ok from emp left join jobs on emp.ok=jobs.ok;
+ERROR 1054 (42S22): Unknown column 'jobs.ok' in 'on clause'
+mysql> alter table jobs add ok varchar(0);
+Query OK, 0 rows affected (0.68 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from jobs;
++------------+---------------------------------+------------+------------+------+
+| JOB_ID     | JOB_TITLE                       | MIN_SALARY | MAX_SALARY | ok   |
++------------+---------------------------------+------------+------------+------+
+| AD_PRES    | President                       | 20080      | 40000      | NULL |
+| AD_VP      | Administration Vice President   | 15000      | 30000      | NULL |
+| AD_ASST    | Administration Assistant        | 3000       | 6000       | NULL |
+| FI_MGR     | Finance Manager                 | 8200       | 16000      | NULL |
+| FI_ACCOUNT | Accountant                      | 4200       | 9000       | NULL |
+| AC_MGR     | Accounting Manager              | 8200       | 16000      | NULL |
+| AC_ACCOUNT | Public Accountant               | 4200       | 9000       | NULL |
+| SA_MAN     | Sales Manager                   | 10000      | 20080      | NULL |
+| SA_REP     | Sales Representative            | 6000       | 12008      | NULL |
+| PU_MAN     | Purchasing Manager              | 8000       | 15000      | NULL |
+| PU_CLERK   | Purchasing Clerk                | 2500       | 5500       | NULL |
+| ST_MAN     | Stock Manager                   | 5500       | 8500       | NULL |
+| ST_CLERK   | Stock Clerk                     | 2008       | 5000       | NULL |
+| SH_CLERK   | Shipping Clerk                  | 2500       | 5500       | NULL |
+| IT_PROG    | Programmer                      | 4000       | 10000      | NULL |
+| MK_MAN     | Marketing Manager               | 9000       | 15000      | NULL |
+| MK_REP     | Marketing Representative        | 4000       | 9000       | NULL |
+| HR_REP     | Human Resources Representative  | 4000       | 9000       | NULL |
+| PR_REP     | Public Relations Representative | 4500       | 10500      | NULL |
++------------+---------------------------------+------------+------------+------+
+19 rows in set (0.00 sec)
+
+mysql> select ok from emp left join jobs on emp.ok=jobs.ok;
+ERROR 1052 (23000): Column 'ok' in field list is ambiguous
+mysql> alter table jobs add ok varchar('0');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''0')' at line 1
+mysql> select ok from emp left join jobs on emp.ok=jobs.ok;
+ERROR 1052 (23000): Column 'ok' in field list is ambiguous
+mysql> select * from emp left join jobs on emp.ok=jobs.ok;
++-------+--------+-----------+------+------------+------+---------+--------+------+--------+-----------+------------+------------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM    | DEPTNO | ok   | JOB_ID | JOB_TITLE | MIN_SALARY | MAX_SALARY | ok   |
++-------+--------+-----------+------+------------+------+---------+--------+------+--------+-----------+------------+------------+------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980/12/17 |  800 |         | 20     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981/2/20  | 1600 | 300.00  | 30     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981/2/22  | 1250 | 500.00  | 30     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7566 | JONES  | MANAGER   | 7839 | 1981/4/2   | 2975 |         | 20     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981/9/28  | 1250 | 1400.00 | 30     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981/5/1   | 2850 |         | 30     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981/6/9   | 2450 |         | 10     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987/4/19  | 3000 |         | 20     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7839 | KING   | PRESIDENT |      | 1981/11/17 | 5000 |         | 10     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981/9/8   | 1500 | 0.00    | 30     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987/5/23  | 1100 |         | 20     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7900 | JAMES  | CLERK     | 7698 | 1981/12/3  |  950 |         | 30     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7902 | FORD   | ANALYST   | 7566 | 1981/12/3  | 3000 |         | 20     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
+|  7934 | MILLER | CLERK     | 7782 | 1982/1/23  | 1300 |         | 10     | 1    | NULL   | NULL      | NULL       | NULL       | NULL |
++-------+--------+-----------+------+------------+------+---------+--------+------+--------+-----------+------------+------------+------+
+14 rows in set (0.00 sec)
+
+mysql> select * from emp ,jobs where emp.ok=jobs.ok;
+Empty set (0.00 sec)
+
+mysql> select * from emp ,jobs where jobs.ok=emp.ok;
+Empty set (0.00 sec)
+
+mysql> select mgr from emp union all select ok from jobs;
++------+
+| mgr  |
++------+
+| 7902 |
+| 7698 |
+| 7698 |
+| 7839 |
+| 7698 |
+| 7839 |
+| 7839 |
+| 7566 |
+|      |
+| 7698 |
+| 7788 |
+| 7698 |
+| 7566 |
+| 7782 |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
+| NULL |
++------+
+33 rows in set (0.00 sec)
