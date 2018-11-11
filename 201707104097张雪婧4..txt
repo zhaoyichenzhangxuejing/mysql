@@ -1,0 +1,157 @@
+Microsoft Windows [版本 10.0.16299.15]
+(c) 2017 Microsoft Corporation。保留所有权利。
+
+C:\Windows\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\Windows\system32>mysql -u root-p
+ERROR 1045 (28000): Access denied for user 'root-p'@'localhost' (using password: NO)
+
+C:\Windows\system32>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 32
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use zhaoyichen;
+Database changed
+mysql> create table movie(id int primary key auto_increment not null,name varchar(30) not null,year varchar(5) not null,daoyan varchar(10) not null,grade varchar(5) not null);
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> desc movie;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | NO   |     | NULL    |                |
+| year   | varchar(5)  | NO   |     | NULL    |                |
+| daoyan | varchar(10) | NO   |     | NULL    |                |
+| grade  | varchar(5)  | NO   |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into movie(name,year,daoyan,grade) values('kuaibawogedaizou','2018','zhengfenfen','6.9');
+ERROR 1406 (22001): Data too long for column 'daoyan' at row 1
+mysql> drop table movie;
+Query OK, 0 rows affected (0.53 sec)
+
+mysql> create table movie(id int primary key auto_increment not null,name varchar(30) not null,year int(5) not null,daoyan varchar(10) not null,grade varchar(5) not null);
+Query OK, 0 rows affected (0.81 sec)
+
+mysql> desc movie;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | NO   |     | NULL    |                |
+| year   | int(5)      | NO   |     | NULL    |                |
+| daoyan | varchar(10) | NO   |     | NULL    |                |
+| grade  | varchar(5)  | NO   |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+5 rows in set (0.12 sec)
+
+mysql> insert into movie(name,year,daoyan,grade) values('kuaibawogedaizou',2018,'zhengfenfen','6.9');
+ERROR 1406 (22001): Data too long for column 'daoyan' at row 1
+mysql> insert into movie(name,year,daoyan,grade) values('kuaibawogedaizou',2018,'zheng','6.9');
+Query OK, 1 row affected (0.26 sec)
+
+mysql> select * from movie;
++----+------------------+------+--------+-------+
+| id | name             | year | daoyan | grade |
++----+------------------+------+--------+-------+
+|  1 | kuaibawogedaizou | 2018 | zheng  | 6.9   |
++----+------------------+------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into movie(name,year,daoyan,grade) values('wobushiyaoshen','wushuang','maoyaozhuan'),(2018,2018,2017),('xuzheng','zhuang','chen'),('9.0','8.1','6.9');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into movie(name) values('wobushiyaoshen','wushuang','maoyaozhuan');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into movie(name) values('wobushiyaoshen'),('wushuang'),('maoyaozhuan');
+ERROR 1364 (HY000): Field 'year' doesn't have a default value
+mysql> insert into movie(name,year,daoyan,grade) values('wobushiyaoshen'),(2018),('xuzheng'),('9.0');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into movie(name,year,daoyan,grade) values('wobushiyaoshen',2018,'xuzheng','9.0');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into movie(name,year,daoyan,grade) values('wushuang',2018,'zhuang','8.1');
+Query OK, 1 row affected (0.25 sec)
+
+mysql> insert into movie(name,year,daoyan,grade) values('maoyaozhuan',2017,'chen','6.9');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from movie;
++----+------------------+------+---------+-------+
+| id | name             | year | daoyan  | grade |
++----+------------------+------+---------+-------+
+|  1 | kuaibawogedaizou | 2018 | zheng   | 6.9   |
+|  2 | wobushiyaoshen   | 2018 | xuzheng | 9.0   |
+|  3 | wushuang         | 2018 | zhuang  | 8.1   |
+|  4 | maoyaozhuan      | 2017 | chen    | 6.9   |
++----+------------------+------+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * like '%sh%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like '%sh%'' at line 1
+mysql> select * like %sh%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like %sh%' at line 1
+mysql> select name from movie where name like '%sh%';
++----------------+
+| name           |
++----------------+
+| wobushiyaoshen |
+| wushuang       |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> select daoyan from movie where daoyan like '%zhuang%';
++--------+
+| daoyan |
++--------+
+| zhuang |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select 'year'= '2017';
++----------------+
+| 'year'= '2017' |
++----------------+
+|              0 |
++----------------+
+1 row in set (0.10 sec)
+
+mysql> select 'grade'= 'max(grade)';
++-----------------------+
+| 'grade'= 'max(grade)' |
++-----------------------+
+|                     0 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> select 'grade'= 'max';
++----------------+
+| 'grade'= 'max' |
++----------------+
+|              0 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select grade,count(grade) from movie where grade >= 8.0 group by grade;
++-------+--------------+
+| grade | count(grade) |
++-------+--------------+
+| 9.0   |            1 |
+| 8.1   |            1 |
++-------+--------------+
+2 rows in set (0.00 sec)
