@@ -1,0 +1,169 @@
+Microsoft Windows [版本 10.0.16299.15]
+(c) 2017 Microsoft Corporation。保留所有权利。
+
+C:\Windows\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\Windows\system32>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use zhaoyichen;
+Database changed
+mysql> create table user(user_id smallint unsigned not null auto_increment,user varchar(15) not null,last_update timestamp not null default current_timestamp on update current_timestamp,primary key(user_id))engine=INNODB default charset=utf8;
+Query OK, 0 rows affected, 1 warning (0.56 sec)
+
+mysql> create table zhuangbei(zhuangbei_id smallint unsigned not null auto_increment,zhuangbei varchar(50) not null,user_id smallint unsigned not null,last_update timestamp not null default current_timestamp on update current_timestamp,primary key(zhuangbei_id),key `idx_fk_user_id`(user_id),constraint`fk_user_zhuangbei` foreign key(user_id) references zhuangbei (zhuangbei_id) on delete restrict on update cascade)engine=INNODB default charset=utf8;
+Query OK, 0 rows affected, 1 warning (0.63 sec)
+
+mysql> desc country;
+ERROR 1146 (42S02): Table 'zhaoyichen.country' doesn't exist
+mysql> desc user;
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| Field       | Type                 | Null | Key | Default           | Extra                       |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| user_id     | smallint(5) unsigned | NO   | PRI | NULL              | auto_increment              |
+| user        | varchar(15)          | NO   |     | NULL              |                             |
+| last_update | timestamp            | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc zhuangbei;
++--------------+----------------------+------+-----+-------------------+-----------------------------+
+| Field        | Type                 | Null | Key | Default           | Extra                       |
++--------------+----------------------+------+-----+-------------------+-----------------------------+
+| zhuangbei_id | smallint(5) unsigned | NO   | PRI | NULL              | auto_increment              |
+| zhuangbei    | varchar(50)          | NO   |     | NULL              |                             |
+| user_id      | smallint(5) unsigned | NO   | MUL | NULL              |                             |
+| last_update  | timestamp            | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++--------------+----------------------+------+-----+-------------------+-----------------------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into user(user_id) values('201');
+ERROR 1364 (HY000): Field 'user' doesn't have a default value
+mysql> insert into user(user_id) values(201);
+ERROR 1364 (HY000): Field 'user' doesn't have a default value
+mysql> insert into user(user) values(201);
+Query OK, 1 row affected (0.39 sec)
+
+mysql> select * from user;
++---------+------+---------------------+
+| user_id | user | last_update         |
++---------+------+---------------------+
+|       1 | 201  | 2018-11-16 08:59:04 |
++---------+------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from zhuangbei;
+Empty set (0.00 sec)
+
+mysql> insert into zhuangbei(zhuangbei,zhuangbei_id) values("yifu",1);
+ERROR 1364 (HY000): Field 'user_id' doesn't have a default value
+mysql> insert into zhuangbei(zhuangbei,zhuangbei_id) values("yifu",11);
+ERROR 1364 (HY000): Field 'user_id' doesn't have a default value
+mysql> insert into zhuangbei(zhuangbei,zhuangbei_id) values(yifu,11);
+ERROR 1054 (42S22): Unknown column 'yifu' in 'field list'
+mysql> insert into zhuangbei(zhuangbei,zhuangbei_id) values('yifu',11);
+ERROR 1364 (HY000): Field 'user_id' doesn't have a default value
+mysql> create table shopping5(id int primary key auto_increment not null,wish varchar(27),name varchar(20) not null,idDelete varchar(1));
+Query OK, 0 rows affected (0.48 sec)
+
+mysql> drop shopping5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'shopping5' at line 1
+mysql> drop table shopping5;
+Query OK, 0 rows affected (0.50 sec)
+
+mysql> create table user1(id int primary key auto_increment not null,user_id varchar(5),idDelete varchar(1));
+Query OK, 0 rows affected (0.49 sec)
+
+mysql> desc user1;
++----------+------------+------+-----+---------+----------------+
+| Field    | Type       | Null | Key | Default | Extra          |
++----------+------------+------+-----+---------+----------------+
+| id       | int(11)    | NO   | PRI | NULL    | auto_increment |
+| user_id  | varchar(5) | YES  |     | NULL    |                |
+| idDelete | varchar(1) | YES  |     | NULL    |                |
++----------+------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into user(user_id,idDelete) values('222',0);
+ERROR 1054 (42S22): Unknown column 'idDelete' in 'field list'
+mysql> insert into user1(user_id,idDelete) values('222',0);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from user1;
++----+---------+----------+
+| id | user_id | idDelete |
++----+---------+----------+
+|  1 | 222     | 0        |
++----+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into zhuangbei(name,jiage) values('zxj',100');
+    '> ；
+    '> ^C
+mysql> ^C
+mysql> insert into zhuangbei(name,jiage) values('zxj',100');
+    '> ^C
+mysql> ^C
+mysql> insert into zhuangbei(name,jiage) values('zxj','100');
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> create table zhuangbei1(id int primary key auto_increment not null,name varchar(7),jiage int(3) not null);
+Query OK, 0 rows affected (0.54 sec)
+
+mysql> desc zhuangbei1;
++-------+------------+------+-----+---------+----------------+
+| Field | Type       | Null | Key | Default | Extra          |
++-------+------------+------+-----+---------+----------------+
+| id    | int(11)    | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(7) | YES  |     | NULL    |                |
+| jiage | int(3)     | NO   |     | NULL    |                |
++-------+------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into zhuangbei(name,jiage) values('zxj',100);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> insert into zhuangbei1(name,jiage) values('zxj',100);
+Query OK, 1 row affected (0.22 sec)
+
+mysql> create table zhuangbei2(id int primary key auto_increment not null,name varchar(7),jiage int(3),mima int(16) not null);
+Query OK, 0 rows affected (0.53 sec)
+
+mysql> insert into zhuangbei2(name,jiage,mima) values('zxj',100,1235213);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from zhuangbei2;
++----+------+-------+---------+
+| id | name | jiage | mima    |
++----+------+-------+---------+
+|  1 | zxj  |   100 | 1235213 |
++----+------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select mima md5;
+ERROR 1054 (42S22): Unknown column 'mima' in 'field list'
+mysql> select mima md5 where zhuangbei2;
+ERROR 1054 (42S22): Unknown column 'mima' in 'field list'
+mysql> select * from md5('1235213');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('1235213')' at line 1
+mysql> select * from md5(1235213);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(1235213)' at line 1
+mysql> select * from md5('mima');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('mima')' at line 1
+mysql> select * from md5('1235213');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('1235213')' at line 1
+mysql> select * from md5(1235213);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(1235213)' at line 1
